@@ -146,4 +146,12 @@ export class PreorderService {
       },
     });
   }
+
+  async remove(id: string): Promise<PreorderResponse> {
+    await this.findOne(id);
+
+    return this.prisma.preorder.delete({
+      where: { id },
+    });
+  }
 }

@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PreorderService } from './preorder.service';
 import { CreatePreorderDto } from './dto/create-preorder.dto';
 import { UpdatePreorderDto } from './dto/update-preorder.dto';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
@@ -101,6 +104,24 @@ export class PreorderController {
     return sendResponse<PreorderResponse>({
       statusCode: HttpStatus.OK,
       message: 'Preorder updated successfully.',
+      data: result,
+    });
+  }
+
+  @Delete(':id')
+  @ApiParam({ name: 'id', example: 'clxpreorder123' })
+  @ApiOkResponse({
+    description: 'Preorder deleted successfully.',
+  })
+  @ApiNotFoundResponse({
+    description: 'Preorder not found.',
+  })
+  async remove(@Param('id') id: string) {
+    const result = await this.preorderService.remove(id);
+
+    return sendResponse<PreorderResponse>({
+      statusCode: HttpStatus.OK,
+      message: 'Preorder deleted successfully.',
       data: result,
     });
   }
