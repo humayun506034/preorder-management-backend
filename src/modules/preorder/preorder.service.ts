@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreatePreorderDto } from './dto/create-preorder.dto';
+import { UpdatePreorderDto } from './dto/update-preorder.dto';
 import {
   DEFAULT_PREORDER_LIMIT,
   DEFAULT_PREORDER_PAGE,
@@ -109,5 +110,40 @@ export class PreorderService {
     }
 
     return preorder;
+  }
+
+  async update(
+    id: string,
+    updatePreorderDto: UpdatePreorderDto,
+  ): Promise<PreorderResponse> {
+    await this.findOne(id);
+
+    return this.prisma.preorder.update({
+      where: { id },
+      data: {
+        ...(updatePreorderDto.name === undefined
+          ? {}
+          : { name: updatePreorderDto.name }),
+        ...(updatePreorderDto.products === undefined
+          ? {}
+          : { products: updatePreorderDto.products }),
+        ...(updatePreorderDto.preorderWhen === undefined
+          ? {}
+          : { preorderWhen: updatePreorderDto.preorderWhen }),
+        ...(updatePreorderDto.startsAt === undefined
+          ? {}
+          : { startsAt: new Date(updatePreorderDto.startsAt) }),
+        ...(updatePreorderDto.endsAt === undefined
+          ? {}
+          : {
+              endsAt: updatePreorderDto.endsAt
+                ? new Date(updatePreorderDto.endsAt)
+                : null,
+            }),
+        ...(updatePreorderDto.isActive === undefined
+          ? {}
+          : { isActive: updatePreorderDto.isActive }),
+      },
+    });
   }
 }

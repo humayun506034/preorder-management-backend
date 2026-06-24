@@ -1,11 +1,13 @@
 import { PreorderService } from './preorder.service';
 import { CreatePreorderDto } from './dto/create-preorder.dto';
+import { UpdatePreorderDto } from './dto/update-preorder.dto';
 import {
   Body,
   Controller,
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -77,6 +79,28 @@ export class PreorderController {
     return sendResponse<PreorderResponse>({
       statusCode: HttpStatus.OK,
       message: 'Preorder fetched successfully.',
+      data: result,
+    });
+  }
+
+  @Patch(':id')
+  @ApiParam({ name: 'id', example: 'clxpreorder123' })
+  @ApiBody({ type: UpdatePreorderDto })
+  @ApiOkResponse({
+    description: 'Preorder updated successfully.',
+  })
+  @ApiNotFoundResponse({
+    description: 'Preorder not found.',
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() updatePreorderDto: UpdatePreorderDto,
+  ) {
+    const result = await this.preorderService.update(id, updatePreorderDto);
+
+    return sendResponse<PreorderResponse>({
+      statusCode: HttpStatus.OK,
+      message: 'Preorder updated successfully.',
       data: result,
     });
   }
