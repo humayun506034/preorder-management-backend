@@ -14,12 +14,13 @@ datasource db {
 }
 
 model Preorder {
-  id            String   @id @default(uuid())
-  customerName  String
-  customerEmail String
-  productName   String
-  quantity      Int      @default(1)
-  status        String   @default("pending")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  products     Int      @default(1)
+  preorderWhen String
+  startsAt     DateTime
+  endsAt       DateTime?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
