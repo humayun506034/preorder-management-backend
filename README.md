@@ -1,98 +1,232 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Preorder Manager API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend API for managing product preorders. The app is built with NestJS, Prisma 7, PostgreSQL, Swagger, and class-validator.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- Create preorder
+- List preorders with database-level filtering, sorting, and pagination
+- Get a single preorder by id
+- Update preorder
+- Delete preorder
+- Swagger API documentation
+- Consistent response wrapper with `success`, `statusCode`, `message`, `data`, and optional `meta`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
 
-## Project setup
+- Node.js
+- NestJS 11
+- Prisma 7
+- PostgreSQL
+- `@prisma/adapter-pg`
+- Swagger
+- class-validator / class-transformer
+
+## Setup
+
+Install dependencies:
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
+PORT=3000
+```
+
+Generate Prisma client:
+
+```bash
+npx prisma generate
+```
+
+Apply database migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+Seed sample preorder data:
+
+```bash
+npm run seed
+```
+
+For quick development sync without migrations, you can use:
+
+```bash
+npx prisma db push
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The API runs at:
+
+```txt
+http://localhost:3000
+```
+
+Swagger docs:
+
+```txt
+http://localhost:3000/docs
+```
+
+## Prisma Model
+
+```prisma
+model Preorder {
+  id           String   @id @default(uuid())
+  name         String
+  products     Int      @default(1)
+  preorderWhen String
+  startsAt     DateTime
+  endsAt       DateTime?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+```
+
+## API Endpoints
+
+### Create Preorder
+
+```txt
+POST /preorder
+```
+
+Request body:
+
+```json
+{
+  "name": "Multi variant 3",
+  "products": 1,
+  "preorderWhen": "regardless-of-stock",
+  "startsAt": "2025-12-15T20:24:00.000Z",
+  "endsAt": "2025-12-15T20:27:00.000Z",
+  "isActive": true
+}
+```
+
+### Get Preorders
+
+```txt
+GET /preorder
+```
+
+Query parameters:
+
+| Name | Values | Default |
+| --- | --- | --- |
+| `status` | `all`, `active`, `inactive` | `all` |
+| `sortBy` | `name`, `createdAt`, `startsAt`, `endsAt` | `createdAt` |
+| `sortOrder` | `asc`, `desc` | `desc` |
+| `page` | number, starts from `1` | `1` |
+| `limit` | number, max `100` | `10` |
+
+Example:
+
+```txt
+GET /preorder?status=all&sortBy=createdAt&sortOrder=desc&page=1&limit=10
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Preorder list fetched successfully.",
+  "data": [],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "itemCount": 10,
+    "totalItems": 21,
+    "totalPages": 3,
+    "from": 1,
+    "to": 10,
+    "hasNextPage": true,
+    "hasPreviousPage": false
+  }
+}
+```
+
+Pagination notes:
+
+- `itemCount` is the number of records returned on the current page.
+- `totalItems` is the total number of database records matching the current filter.
+- `from` and `to` are useful for UI text such as `Showing 1 to 10 from 21`.
+
+### Get Single Preorder
+
+```txt
+GET /preorder/:id
+```
+
+### Update Preorder
+
+```txt
+PATCH /preorder/:id
+```
+
+Request body supports partial updates:
+
+```json
+{
+  "name": "Updated preorder",
+  "products": 2,
+  "preorderWhen": "out-of-stock",
+  "startsAt": "2025-12-15T20:24:00.000Z",
+  "endsAt": null,
+  "isActive": false
+}
+```
+
+### Delete Preorder
+
+```txt
+DELETE /preorder/:id
+```
+
+## Useful Commands
 
 ```bash
 # development
-$ npm run start
+npm run dev
 
-# watch mode
-$ npm run start:dev
+# production build
+npm run build
 
-# production mode
-$ npm run start:prod
+# run compiled app
+npm run start:prod
+
+# lint and auto-fix
+npm run lint
+
+# format
+npm run format
+
+# regenerate Prisma client
+npx prisma generate
+
+# apply migrations
+npx prisma migrate dev
+
+# seed 15 sample preorders
+npm run seed
 ```
 
-## Run tests
+## Notes
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- This project uses Prisma 7 with the PostgreSQL driver adapter, so `@prisma/adapter-pg` and `pg` are required.
+- Prisma client is generated into `generated/prisma` using `moduleFormat = "cjs"` for NestJS runtime compatibility.
+- The database URL is read from `.env`.

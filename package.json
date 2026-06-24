@@ -12,12 +12,16 @@
     "dev": "nest start --watch",
     "debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "seed": "npm run build && node dist/prisma/seed.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "prisma": {
+    "seed": "npm run seed"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
