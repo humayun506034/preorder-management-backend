@@ -1,122 +1,122 @@
 [
   {
-    "name": "Multi variant 3",
-    "products": 1,
-    "preorderWhen": "out-of-stock",
-    "startsAt": "2025-12-15T20:24:00.000Z",
-    "endsAt": null,
-    "isActive": false
-  },
-  {
-    "name": "Multi variant 2",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-12-15T20:24:00.000Z",
-    "endsAt": "2025-12-15T20:27:00.000Z",
-    "isActive": true
-  },
-  {
-    "name": "Multi variants 1",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-12-15T20:24:00.000Z",
-    "endsAt": null,
-    "isActive": true
-  },
-  {
-    "name": "Partial payment",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-08-17T04:56:00.000Z",
-    "endsAt": "2025-08-31T23:59:00.000Z",
-    "isActive": true
-  },
-  {
-    "name": "Shipping not sure",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-08-17T04:56:00.000Z",
-    "endsAt": null,
-    "isActive": true
-  },
-  {
-    "name": "Full payment",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-08-17T04:56:00.000Z",
-    "endsAt": "2025-09-01T00:00:00.000Z",
-    "isActive": true
-  },
-  {
-    "name": "Coming soon",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-12-11T04:42:00.000Z",
-    "endsAt": null,
-    "isActive": true
-  },
-  {
-    "name": "With ends",
-    "products": 1,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-08-14T03:59:00.000Z",
-    "endsAt": "2025-08-20T03:59:00.000Z",
-    "isActive": true
-  },
-  {
-    "name": "Flash preorder",
-    "products": 3,
-    "preorderWhen": "out-of-stock",
-    "startsAt": "2025-09-05T10:00:00.000Z",
-    "endsAt": "2025-09-07T18:00:00.000Z",
-    "isActive": false
-  },
-  {
-    "name": "Winter collection",
-    "products": 5,
-    "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-11-01T09:00:00.000Z",
-    "endsAt": null,
-    "isActive": true
-  },
-  {
-    "name": "Limited drop",
-    "products": 2,
-    "preorderWhen": "out-of-stock",
-    "startsAt": "2025-10-10T12:30:00.000Z",
-    "endsAt": "2025-10-12T12:30:00.000Z",
-    "isActive": true
-  },
-  {
-    "name": "Restock batch",
+    "name": "Summer Essentials Drop",
     "products": 4,
     "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-07-21T14:15:00.000Z",
+    "startsAt": "2026-06-25T09:00:00.000Z",
+    "endsAt": "2026-07-02T23:59:00.000Z",
+    "isActive": true
+  },
+  {
+    "name": "Weekend Flash Preorder",
+    "products": 2,
+    "preorderWhen": "out-of-stock",
+    "startsAt": "2026-06-27T10:00:00.000Z",
+    "endsAt": "2026-06-29T18:00:00.000Z",
+    "isActive": true
+  },
+  {
+    "name": "Early Access Bundle",
+    "products": 3,
+    "preorderWhen": "regardless-of-stock",
+    "startsAt": "2026-07-01T08:30:00.000Z",
+    "endsAt": null,
+    "isActive": true
+  },
+  {
+    "name": "Limited Edition Restock",
+    "products": 5,
+    "preorderWhen": "out-of-stock",
+    "startsAt": "2026-07-05T12:00:00.000Z",
+    "endsAt": "2026-07-12T12:00:00.000Z",
+    "isActive": true
+  },
+  {
+    "name": "Premium Launch Collection",
+    "products": 6,
+    "preorderWhen": "regardless-of-stock",
+    "startsAt": "2026-07-10T06:00:00.000Z",
+    "endsAt": null,
+    "isActive": true
+  },
+  {
+    "name": "Backorder Priority Batch",
+    "products": 3,
+    "preorderWhen": "out-of-stock",
+    "startsAt": "2026-07-15T11:30:00.000Z",
+    "endsAt": "2026-07-22T20:00:00.000Z",
+    "isActive": true
+  },
+  {
+    "name": "August New Arrival",
+    "products": 4,
+    "preorderWhen": "regardless-of-stock",
+    "startsAt": "2026-08-01T09:00:00.000Z",
+    "endsAt": null,
+    "isActive": true
+  },
+  {
+    "name": "Festival Season Preview",
+    "products": 7,
+    "preorderWhen": "regardless-of-stock",
+    "startsAt": "2026-08-12T05:00:00.000Z",
+    "endsAt": "2026-08-25T23:59:00.000Z",
+    "isActive": true
+  },
+  {
+    "name": "Reserved Stock Campaign",
+    "products": 2,
+    "preorderWhen": "out-of-stock",
+    "startsAt": "2026-08-20T14:00:00.000Z",
     "endsAt": null,
     "isActive": false
   },
   {
-    "name": "Early access",
-    "products": 2,
+    "name": "Autumn Collection Preorder",
+    "products": 8,
     "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-07-01T08:00:00.000Z",
-    "endsAt": "2025-07-05T08:00:00.000Z",
+    "startsAt": "2026-09-01T07:30:00.000Z",
+    "endsAt": "2026-09-15T23:59:00.000Z",
     "isActive": true
   },
   {
-    "name": "Holiday preorder",
-    "products": 6,
-    "preorderWhen": "out-of-stock",
-    "startsAt": "2025-12-01T06:30:00.000Z",
+    "name": "Member Exclusive Drop",
+    "products": 3,
+    "preorderWhen": "regardless-of-stock",
+    "startsAt": "2026-09-18T10:00:00.000Z",
     "endsAt": null,
     "isActive": true
   },
   {
-    "name": "Last call",
-    "products": 1,
+    "name": "Low Stock Recovery",
+    "products": 5,
+    "preorderWhen": "out-of-stock",
+    "startsAt": "2026-10-03T13:00:00.000Z",
+    "endsAt": "2026-10-10T13:00:00.000Z",
+    "isActive": false
+  },
+  {
+    "name": "Winter Collection Preview",
+    "products": 6,
     "preorderWhen": "regardless-of-stock",
-    "startsAt": "2025-12-20T16:45:00.000Z",
-    "endsAt": "2025-12-24T16:45:00.000Z",
+    "startsAt": "2026-11-01T09:30:00.000Z",
+    "endsAt": null,
+    "isActive": true
+  },
+  {
+    "name": "Holiday Gift Preorder",
+    "products": 10,
+    "preorderWhen": "regardless-of-stock",
+    "startsAt": "2026-12-01T06:30:00.000Z",
+    "endsAt": "2026-12-18T23:59:00.000Z",
+    "isActive": true
+  },
+  {
+    "name": "Year End Last Call",
+    "products": 4,
+    "preorderWhen": "out-of-stock",
+    "startsAt": "2026-12-20T16:45:00.000Z",
+    "endsAt": null,
     "isActive": false
   }
 ]
