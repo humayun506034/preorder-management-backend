@@ -1,6 +1,14 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
+import {
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
 export const DEFAULT_PREORDER_PAGE = 1;
 export const DEFAULT_PREORDER_LIMIT = 10;
@@ -25,6 +33,15 @@ export enum SortOrder {
 }
 
 export class FindPreordersQueryDto {
+  @ApiPropertyOptional({
+    example: 'summer',
+    description: 'Search by preorder name or preorder timing text.',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  search?: string;
+
   @ApiPropertyOptional({
     enum: PreorderStatusFilter,
     default: PreorderStatusFilter.All,

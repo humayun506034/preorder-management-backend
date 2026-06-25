@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { Prisma } from '../../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreatePreorderDto } from './dto/create-preorder.dto';
 import { UpdatePreorderDto } from './dto/update-preorder.dto';
@@ -78,11 +79,21 @@ export class PreorderService {
     const status = query.status ?? PreorderStatusFilter.All;
     const sortBy = query.sortBy ?? PreorderSortBy.CreatedAt;
     const sortOrder = query.sortOrder ?? SortOrder.Desc;
+    const search = query.search?.trim();
 
-    const where =
-      status === PreorderStatusFilter.All
+    const where: Prisma.PreorderWhereInput = {
+      ...(status === PreorderStatusFilter.All
         ? {}
-        : { isActive: status === PreorderStatusFilter.Active };
+        : { isActive: status === PreorderStatusFilter.Active }),
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { preorderWhen: { contains: search, mode: 'insensitive' } },
+            ],
+          }
+        : {}),
+    };
 
     const [data, totalItems] = await this.prisma.$transaction([
       this.prisma.preorder.findMany({
